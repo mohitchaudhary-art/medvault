@@ -1,0 +1,49 @@
+========================================================================
+             MedVault Healthcare SaaS - How to Run on Any Laptop
+========================================================================
+
+Dear Team Member,
+
+Apne laptop me MedVault chalane ke liye sirf yeh simple steps follow karein:
+
+PREREQUISITE:
+- Aapke laptop me Node.js (v18 ya higher) installed hona chahiye.
+  Agar nahi hai, toh yahan se download karein: https://nodejs.org/ (LTS version)
+
+
+------------------------------------------------------------------------
+METHOD 1: ONE-CLICK AUTOMATIC RUN (RECOMMENDED)
+------------------------------------------------------------------------
+1. Is folder me 'START_PROJECT.bat' file par DOUBLE CLICK karein.
+2. Script automatically:
+   - Check karegi ki Node.js installed hai ya nahi.
+   - First time me 'npm install' karke saare required packages install karegi.
+   - Development server start karegi.
+   - Aapke default browser me automatically 'http://localhost:5173' open ho jayega!
+
+
+------------------------------------------------------------------------
+METHOD 2: MANUAL RUN VIA TERMINAL / VS CODE
+------------------------------------------------------------------------
+1. Is folder ko VS Code ya Command Prompt me open karein:
+2. Terminal me type karein:
+      npm install
+3. Installation complete hone ke baad run karein:
+      npm run dev
+4. Browser me open karein:
+      http://localhost:5173
+
+
+------------------------------------------------------------------------
+WHAT'S INCLUDED IN THIS ZIP:
+------------------------------------------------------------------------
+- Complete Frontend (React 18 + TypeScript + Tailwind CSS + Zustand)
+- Multi-Role Portals (Doctor, Receptionist, Patient, Pharmacy, Admin)
+- Full Supabase Database Schema & Migrations (supabase/migrations/)
+- Digital Prescription PDF Generator & QR Barcode Engine
+- Academic Presentation Slides & Scripts (docs/ and root)
+- Pre-configured .env & .env.example (Supabase credentials pre-linked)
+
+========================================================================
+Enjoy exploring MedVault!
+========================================================================
