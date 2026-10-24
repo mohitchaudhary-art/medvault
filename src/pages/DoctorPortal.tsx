@@ -448,7 +448,7 @@ export const DoctorPortal: React.FC<DoctorPortalProps> = ({ onJoinTelehealth }) 
                     </button>
 
                     <button
-                      onClick={() => setViewEmrPatient({ id: apt.id, name: apt.patientName })}
+                      onClick={() => setViewEmrPatient({ id: apt.patientId || apt.id, name: apt.patientName })}
                       className="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-all flex items-center gap-1 cursor-pointer shadow-sm"
                       title="View Patient Uploaded Reports & EMR History"
                     >
@@ -533,7 +533,7 @@ export const DoctorPortal: React.FC<DoctorPortalProps> = ({ onJoinTelehealth }) 
                   {/* Actions for Completed Patient */}
                   <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
                     <button
-                      onClick={() => setViewEmrPatient({ id: apt.id, name: apt.patientName })}
+                      onClick={() => setViewEmrPatient({ id: apt.patientId || apt.id, name: apt.patientName })}
                       className="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-all flex items-center gap-1 cursor-pointer shadow-sm"
                       title="View Patient EMR & Uploaded Reports"
                     >
