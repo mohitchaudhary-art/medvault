@@ -23,8 +23,8 @@ export const BookAppointmentModal: React.FC<BookAppointmentModalProps> = ({ doct
   const [selectedSlot, setSelectedSlot] = useState('10:30 AM');
   const [consultationType, setConsultationType] = useState<ConsultationType>('Online Video');
   const [patientName, setPatientName] = useState(user?.fullName || 'Rohan Verma');
-  const [patientPhone, setPatientPhone] = useState('+91 98765 43210');
-  const [symptoms, setSymptoms] = useState('Routine checkup & consultation');
+  const [patientPhone, setPatientPhone] = useState(user?.phone || '+91 98765 43210');
+  const [symptoms, setSymptoms] = useState('');
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('UPI');
   const [createdAppointment, setCreatedAppointment] = useState<Appointment | null>(null);
 
@@ -32,8 +32,12 @@ export const BookAppointmentModal: React.FC<BookAppointmentModalProps> = ({ doct
     if (isOpen) {
       setStep('details');
       setCreatedAppointment(null);
+      setSymptoms(''); // Reset symptoms so every new booking starts completely blank
       if (user?.fullName) {
         setPatientName(user.fullName);
+      }
+      if (user?.phone) {
+        setPatientPhone(user.phone);
       }
       if (doctor?.availableTimeSlots?.length) {
         setSelectedSlot(doctor.availableTimeSlots[0]);
@@ -44,6 +48,7 @@ export const BookAppointmentModal: React.FC<BookAppointmentModalProps> = ({ doct
   const handleCloseModal = () => {
     setStep('details');
     setCreatedAppointment(null);
+    setSymptoms('');
     onClose();
   };
 
@@ -98,6 +103,7 @@ export const BookAppointmentModal: React.FC<BookAppointmentModalProps> = ({ doct
     });
 
     setCreatedAppointment(newApt);
+    setSymptoms('');
     setStep('confirmation');
   };
 
@@ -227,7 +233,7 @@ export const BookAppointmentModal: React.FC<BookAppointmentModalProps> = ({ doct
                     type="text"
                     value={patientName}
                     onChange={(e) => setPatientName(e.target.value)}
-                    placeholder=""
+                    placeholder="Describe symptoms or reason for consultation (e.g. Fever, Headache, Routine Checkup)"
                     autoComplete="off"
                     className="bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-white focus:border-cyan-500"
                     required
@@ -236,7 +242,7 @@ export const BookAppointmentModal: React.FC<BookAppointmentModalProps> = ({ doct
                     type="tel"
                     value={patientPhone}
                     onChange={(e) => setPatientPhone(e.target.value)}
-                    placeholder=""
+                    placeholder="Describe symptoms or reason for consultation (e.g. Fever, Headache, Routine Checkup)"
                     autoComplete="off"
                     className="bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-white focus:border-cyan-500"
                     required
@@ -245,7 +251,7 @@ export const BookAppointmentModal: React.FC<BookAppointmentModalProps> = ({ doct
                 <textarea
                   value={symptoms}
                   onChange={(e) => setSymptoms(e.target.value)}
-                  placeholder=""
+                  placeholder="Describe symptoms or reason for consultation (e.g. Fever, Headache, Routine Checkup)"
                   rows={2}
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-white focus:border-cyan-500"
                 />
