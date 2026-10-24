@@ -434,10 +434,13 @@ export const DoctorPortal: React.FC<DoctorPortalProps> = ({ onJoinTelehealth }) 
 
                     <button
                       onClick={() => {
-                        if (apt.patientName.toLowerCase().includes('rahul') || apt.patientName.toLowerCase().includes('verma')) {
+                        const pName = apt.patientName.toLowerCase();
+                        if (pName.includes('rahul') || pName.includes('verma')) {
+                          setAbhaQuery('70-7463-2446-5224');
+                        } else if (pName.includes('abhay') || pName.includes('sharma')) {
                           setAbhaQuery('70-7463-2446-5224');
                         } else {
-                          setAbhaQuery('');
+                          setAbhaQuery('70-7463-2446-5224');
                         }
                         setShowAbhaModal(true);
                       }}
@@ -930,10 +933,17 @@ export const DoctorPortal: React.FC<DoctorPortalProps> = ({ onJoinTelehealth }) 
               {/* Dynamic Patient Data Resolver */}
               {(() => {
                 const cleanQuery = abhaQuery.trim().replace(/[-\s]/g, '').toLowerCase();
+                const isAbhayMatch = abhaQuery.toLowerCase().includes('abhay');
+                const isSharmaMatch = abhaQuery.toLowerCase().includes('sharma');
                 const isRahulVerma = cleanQuery === '70746324465224' || 
                                      cleanQuery.includes('70746324465224') ||
-                                     abhaQuery.toLowerCase().includes('rahul verma') ||
-                                     abhaQuery.toLowerCase().includes('rahul.verma');
+                                     cleanQuery === '982140918812' ||
+                                     cleanQuery.includes('982140918812') ||
+                                     cleanQuery.includes('9821') ||
+                                     abhaQuery.toLowerCase().includes('rahul') ||
+                                     abhaQuery.toLowerCase().includes('verma') ||
+                                     isAbhayMatch ||
+                                     isSharmaMatch;
 
                 if (!cleanQuery) {
                   return (
@@ -959,14 +969,19 @@ export const DoctorPortal: React.FC<DoctorPortalProps> = ({ onJoinTelehealth }) 
                   );
                 }
 
+                const resolvedName = isAbhayMatch ? 'Abhay Sharma' : (isSharmaMatch && !abhaQuery.toLowerCase().includes('verma') ? 'Rahul Sharma' : 'Rahul Verma');
+                const resolvedInitials = isAbhayMatch ? 'AS' : (resolvedName === 'Rahul Sharma' ? 'RS' : 'RV');
+                const resolvedAbha = cleanQuery.includes('9821') ? '98-2140-9188-12' : '70-7463-2446-5224';
+                const resolvedAddress = isAbhayMatch ? 'abhay.sharma@abdm' : (resolvedName === 'Rahul Sharma' ? 'rahul.sharma@abdm' : 'rahul.verma@abdm');
+
                 const currentPatient = {
-                  name: 'Rahul Verma',
+                  name: resolvedName,
                   age: 31,
                   gender: 'Male',
-                  abha: '70-7463-2446-5224',
-                  abhaAddress: 'rahul.verma@abdm',
+                  abha: resolvedAbha,
+                  abhaAddress: resolvedAddress,
                   hash: '0x7b82...994',
-                  initials: 'RV',
+                  initials: resolvedInitials,
                   records: [
                     {
                       hospital: '🏢 Apollo Heart Super Specialty Hospital (New Delhi Node)',
