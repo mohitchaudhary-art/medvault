@@ -431,12 +431,12 @@ export const DoctorPortal: React.FC<DoctorPortalProps> = ({ onJoinTelehealth }) 
                     <button
                       onClick={() => {
                         const pName = apt.patientName.toLowerCase();
-                        if (pName.includes('rahul') || pName.includes('verma')) {
-                          setAbhaQuery('70-7463-2446-5224');
-                        } else if (pName.includes('abhay') || pName.includes('sharma')) {
+                        if (pName.includes('abhay') || pName.includes('verma')) {
+                          // Only autofill for Abhay Verma who has this ABHA ID linked!
                           setAbhaQuery('70-7463-2446-5224');
                         } else {
-                          setAbhaQuery('70-7463-2446-5224');
+                          // For other patients, keep search blank so it does NOT show Abhay Verma's records!
+                          setAbhaQuery('');
                         }
                         setShowAbhaModal(true);
                       }}
@@ -925,17 +925,11 @@ export const DoctorPortal: React.FC<DoctorPortalProps> = ({ onJoinTelehealth }) 
               {/* Dynamic Patient Data Resolver */}
               {(() => {
                 const cleanQuery = abhaQuery.trim().replace(/[-\s]/g, '').toLowerCase();
-                const isAbhayMatch = abhaQuery.toLowerCase().includes('abhay');
-                const isSharmaMatch = abhaQuery.toLowerCase().includes('sharma');
-                const isRahulVerma = cleanQuery === '70746324465224' || 
+                const isAbhayVerma = cleanQuery === '70746324465224' || 
                                      cleanQuery.includes('70746324465224') ||
-                                     cleanQuery === '982140918812' ||
-                                     cleanQuery.includes('982140918812') ||
-                                     cleanQuery.includes('9821') ||
-                                     abhaQuery.toLowerCase().includes('rahul') ||
-                                     abhaQuery.toLowerCase().includes('verma') ||
-                                     isAbhayMatch ||
-                                     isSharmaMatch;
+                                     cleanQuery.includes('abhay') ||
+                                     cleanQuery.includes('verma') ||
+                                     cleanQuery.includes('707463');
 
                 if (!cleanQuery) {
                   return (
@@ -949,7 +943,7 @@ export const DoctorPortal: React.FC<DoctorPortalProps> = ({ onJoinTelehealth }) 
                   );
                 }
 
-                if (!isRahulVerma) {
+                if (!isAbhayVerma) {
                   return (
                     <div className="py-10 text-center space-y-2 bg-amber-50 dark:bg-amber-950/30 rounded-xl border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300">
                       <AlertCircle className="w-8 h-8 text-amber-600 dark:text-amber-400 mx-auto" />
@@ -961,19 +955,14 @@ export const DoctorPortal: React.FC<DoctorPortalProps> = ({ onJoinTelehealth }) 
                   );
                 }
 
-                const resolvedName = isAbhayMatch ? 'Abhay Sharma' : (isSharmaMatch && !abhaQuery.toLowerCase().includes('verma') ? 'Rahul Sharma' : 'Rahul Verma');
-                const resolvedInitials = isAbhayMatch ? 'AS' : (resolvedName === 'Rahul Sharma' ? 'RS' : 'RV');
-                const resolvedAbha = cleanQuery.includes('9821') ? '98-2140-9188-12' : '70-7463-2446-5224';
-                const resolvedAddress = isAbhayMatch ? 'abhay.sharma@abdm' : (resolvedName === 'Rahul Sharma' ? 'rahul.sharma@abdm' : 'rahul.verma@abdm');
-
                 const currentPatient = {
-                  name: resolvedName,
-                  age: 31,
+                  name: 'Abhay Verma',
+                  age: 28,
                   gender: 'Male',
-                  abha: resolvedAbha,
-                  abhaAddress: resolvedAddress,
+                  abha: '70-7463-2446-5224',
+                  abhaAddress: 'abhay.verma@abdm',
                   hash: '0x7b82...994',
-                  initials: resolvedInitials,
+                  initials: 'AV',
                   records: [
                     {
                       hospital: '🏢 Apollo Heart Super Specialty Hospital (New Delhi Node)',
